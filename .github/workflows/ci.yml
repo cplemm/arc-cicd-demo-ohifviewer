@@ -26,7 +26,8 @@ jobs:
         SOURCE_LOCATION: src 
         DOCKER_FILE: Dockerfile
         REPOSITORY: ohifviewer
-        TASKNAME: OHIFVIEWER_IMAGE   
+        TASKNAME: OHIFVIEWER_IMAGE
+        IMAGE_TAG: ${{ github.sha }}   
       uses: Azure/cli@v1
       with:
         inlineScript:  |
@@ -38,7 +39,8 @@ jobs:
                                                            -u $AZ_ACR_NAME \
                                                            -r $REPOSITORY \
                                                            -t $TASKNAME \
-                                                           -d $DOCKER_FILE
+                                                           -d $DOCKER_FILE \
+                                                           -i $IMAGE_TAG
     - name: Upload Image Tag
       uses: actions/upload-artifact@v2.2.2
       with:
