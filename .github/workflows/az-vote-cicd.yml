@@ -22,8 +22,6 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - name: work around permission issue
-      run: git config --global --add safe.directory '*'
     - name: Create Frontend Image Tags
       env:
         SOURCE_LOCATION: src/azure-vote-front 
@@ -33,6 +31,7 @@ jobs:
       uses: Azure/cli@v1
       with:
         inlineScript:  |
+          git config --global --add safe.directory '*'
           chmod +x $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh
           $GITHUB_WORKSPACE/utils/buildContainerTemplate.sh -f $SRC_FOLDER \
                                                            -g $GITHUB_WORKSPACE \
