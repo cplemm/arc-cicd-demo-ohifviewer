@@ -35,12 +35,16 @@ imageTag=$IMAGE_TAG
 if ! az acr repository show -n $AZ_ACR_NAME --image "$REPOSITORY:$imageTag" -o table; then
     echo No match found. Container will be built.
     echo Tag for new container: $imageTag
-    az acr build \
-        -r $AZ_ACR_NAME \
-        -t "$REPOSITORY:$imageTag" \
-        -t "$REPOSITORY:latest" \
-        -f "$GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION/$DOCKER_FILE" \
-        $GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION
+    
+    docker build -t "$AZ_ACR_NAME/$REPOSITORY:$imageTag" -f "$GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION/$DOCKER_FILE"
+    docker push $AZ_ACR_NAME/$REPOSITORY:$imageTag
+    
+    # az acr build \
+    #     -r $AZ_ACR_NAME \
+    #     -t "$REPOSITORY:$imageTag" \
+    #     -t "$REPOSITORY:latest" \
+    #     -f "$GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION/$DOCKER_FILE" \
+    #     $GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION
 else
     echo "The existing image with tag "$imageTag" is found."
 fi
