@@ -27,7 +27,7 @@ jobs:
         login-server: ${{ secrets.AZ_ACR_NAME }}
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
-    - name: Build Container Image
+    - name: Create Image Tag
       env:
         SOURCE_LOCATION: src 
         DOCKER_FILE: Dockerfile
@@ -47,6 +47,9 @@ jobs:
                                                            -t $TASKNAME \
                                                            -d $DOCKER_FILE \
                                                            -i $IMAGE_TAG
+    - run: |
+        docker build . -t ${{ secrets.AZ_ACR_NAME }}/ohifviewer:${{ github.sha }}
+        docker push ${{ secrets.AZ_ACR_NAME }}/ohifviewer:${{ github.sha }}
     - name: Upload Image Tag
       uses: actions/upload-artifact@v2.2.2
       with:
