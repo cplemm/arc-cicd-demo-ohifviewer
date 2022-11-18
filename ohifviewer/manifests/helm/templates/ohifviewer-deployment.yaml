@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ohifviewer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ohifviewer
+  template:
+    metadata:
+      labels:
+        app: ohifviewer
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+      - name: ohifviewer
+        image: {{  .Values.imageRepo}}/ohifviewer:v3
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            cpu: 1000m
+            memory: 2Gi

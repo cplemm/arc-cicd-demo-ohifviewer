@@ -1,0 +1,2 @@
+serviceType: ClusterIP
+imageRepo: $OHIFVIEWER_IMAGE_REPO
