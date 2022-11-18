@@ -48,7 +48,7 @@ jobs:
                                                            -d $DOCKER_FILE \
                                                            -i $IMAGE_TAG
     - run: |
-        docker build . -t ${{ secrets.AZ_ACR_NAME }}/ohifviewer:${{ github.sha }}
+        docker build -t ${{ secrets.AZ_ACR_NAME }}/ohifviewer:${{ github.sha }} -f "$GITHUB_WORKSPACE/$SRC_FOLDER/src/Dockerfile"
         docker push ${{ secrets.AZ_ACR_NAME }}/ohifviewer:${{ github.sha }}
     - name: Upload Image Tag
       uses: actions/upload-artifact@v2.2.2
