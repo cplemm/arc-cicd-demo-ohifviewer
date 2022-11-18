@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ohifviewer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ohifviewer
+  template:
+    metadata:
+      labels:
+        app: ohifviewer
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      containers:
+      - name: ohifviewer
+        image: clemm.azurecr.io/ohifviewers:1.0
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ohifviewer
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: ohifviewer
+  type: LoadBalancer
