@@ -1,10 +1,9 @@
 
 name: CD_Stage
  
-on: |
-  workflow_dispatch
-  repository_dispatch:
-    types: [sync-success]
+on: workflow_dispatch
+#  repository_dispatch:
+#    types: [sync-success]
 
 jobs:
   Test_Dev:
