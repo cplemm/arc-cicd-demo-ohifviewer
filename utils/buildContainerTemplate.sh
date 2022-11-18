@@ -32,12 +32,12 @@ imageTag=$IMAGE_TAG
 #popd
   
 # If the image with the generated tag doesn't already exist, build it.
-if ! az acr repository show -n $AZ_ACR_NAME --image "$REPOSITORY:$imageTag" -o table; then
-    echo No match found. Container will be built.
-    echo Tag for new container: $imageTag
+# if ! az acr repository show -n $AZ_ACR_NAME --image "$REPOSITORY:$imageTag" -o table; then
+#     echo No match found. Container will be built.
+#     echo Tag for new container: $imageTag
     
-    docker build -t "$AZ_ACR_NAME/$REPOSITORY:$imageTag" -f "$GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION/$DOCKER_FILE"
-    docker push $AZ_ACR_NAME/$REPOSITORY:$imageTag
+#     docker build -t "$AZ_ACR_NAME/$REPOSITORY:$imageTag" -f "$GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION/$DOCKER_FILE"
+#     docker push $AZ_ACR_NAME/$REPOSITORY:$imageTag
     
     # az acr build \
     #     -r $AZ_ACR_NAME \
@@ -45,9 +45,10 @@ if ! az acr repository show -n $AZ_ACR_NAME --image "$REPOSITORY:$imageTag" -o t
     #     -t "$REPOSITORY:latest" \
     #     -f "$GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION/$DOCKER_FILE" \
     #     $GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION
-else
-    echo "The existing image with tag "$imageTag" is found."
-fi
+# else
+#     echo "The existing image with tag "$imageTag" is found."
+# fi
+
 set +x
 echo "setting IMAGE_TAG output for task $TASKNAME"
 echo "##vso[task.setvariable variable=IMAGE_TAG;isOutput=true]$imageTag"
