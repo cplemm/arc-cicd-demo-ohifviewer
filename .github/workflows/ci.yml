@@ -10,7 +10,8 @@ on:
 
 jobs:
   Build_Push_OHIFViewer_Image:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
     env:
       SRC_FOLDER: ohifviewer
       AZ_ACR_NAME: ${{ secrets.AZ_ACR_NAME }}
