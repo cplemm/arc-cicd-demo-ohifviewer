@@ -32,7 +32,7 @@ jobs:
       env:
         SOURCE_LOCATION: src 
         DOCKER_FILE: Dockerfile
-        REPOSITORY: ohifviewer
+        REPOSITORY: ohifviewer/ohifviewer
         TASKNAME: OHIFVIEWER_IMAGE
         IMAGE_TAG: ${{ github.sha }}   
       uses: Azure/cli@v1
