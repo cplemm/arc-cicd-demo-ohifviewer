@@ -16,6 +16,8 @@ jobs:
       SRC_FOLDER: ohifviewer
       AZ_ACR_NAME: ${{ secrets.AZ_ACR_NAME }}
     steps:
+    - run: |
+        sudo chown -R clemm /home/clemm/actions-runner/_work/
     - name: Checkout
       uses: actions/checkout@v2.3.4
     - name: Azure Login
