@@ -13,5 +13,5 @@
   <rect x="1.25" y="1.25" width="18.8" height="18.8" rx="1" ry="1" style="fill:rgb(0,153,153);stroke-width:1;stroke:rgb(0,0,0)"/>
   <rect x="26" y="1.25" width="18.8" height="18.8" rx="1" ry="1" style="fill:rgb(230,115,0);stroke-width:1;stroke:rgb(0,0,0)"/>
   <rect x="1.25" y="26" width="18.8" height="18.8" rx="1" ry="1" style="fill:rgb(230,115,0);stroke-width:1;stroke:rgb(0,0,0)"/>
-  <rect x="26" y="26" width="18.8" height="18.8" rx="1" ry="1" style="fill:rgb(0,153,153);stroke-width:1;stroke:rgb(0,0,0)"/>
+  <rect x="26" y="26" width="18.8" height="18.8" rx="1" ry="1" />
 </svg>
