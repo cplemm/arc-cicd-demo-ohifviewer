@@ -6,7 +6,7 @@ set -x
 
 az aks get-credentials --resource-group $AKS_RESOURCE_GROUP --name $AKS_NAME
 
-kubectl port-forward svc/azure-vote-front 5678:80 --namespace=$TARGET_NAMESPACE&
+kubectl port-forward svc/ohifviewer 5678:80 --namespace=$TARGET_NAMESPACE&
 portForwardPid=$!
 
 
