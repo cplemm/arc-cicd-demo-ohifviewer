@@ -11,6 +11,7 @@ on:
 jobs:
   Build_Push_OHIFViewer_Image:
     #runs-on: ubuntu-latest
+    name: Build and Push Image
     runs-on: [self-hosted, Linux, X64]
     env:
       SRC_FOLDER: ohifviewer
@@ -70,7 +71,7 @@ jobs:
         path: ${{ github.workspace }}/utils
   Deploy_to_Stage:
     name: Deploy to Stage
-#    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
     runs-on: [self-hosted, Linux, X64]
     needs: Build_Push_OHIFViewer_Image
     environment: ohifviewer-stage
