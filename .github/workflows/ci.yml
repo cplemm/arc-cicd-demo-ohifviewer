@@ -68,11 +68,11 @@ jobs:
       with:
         name: utils
         path: ${{ github.workspace }}/utils
-  Deploy_to_Dev:
-    name: "Deploy to Dev"
+  Deploy_to_Stage:
+    name: Deploy to Stage
     runs-on: ubuntu-latest
     needs: Build_Push_OHIFViewer_Image
-    environment: ohifviewer-dev
+    environment: ohifviewer-stage
     steps:
     - name: Checkout
       uses: actions/checkout@v2.3.4
