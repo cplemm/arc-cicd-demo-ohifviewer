@@ -1,4 +1,3 @@
-
 name: CD
  
 on: workflow_dispatch
@@ -7,9 +6,10 @@ on: workflow_dispatch
 
 jobs:
   Test_Stage:
-    name: Test Dev
-    runs-on: ubuntu-latest
-    environment: az-vote-app-dev
+    name: Test Stage
+    #runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64]
+    environment: ohifviewer-stage
     steps:
     - name: Checkout
       uses: actions/checkout@v2.3.4
@@ -27,9 +27,10 @@ jobs:
         TARGET_NAMESPACE: ${{ secrets.TARGET_NAMESPACE }}
   Deploy_to_Prod:
       name: Deploy to Prod
-      runs-on: ubuntu-latest
+      runs-on: [self-hosted, Linux, X64]
+      #runs-on: ubuntu-latest
       needs: Test_Stage
-      environment: az-vote-app-stage
+      environment: ohifviewer-prod
       steps:
       - name: Checkout
         uses: actions/checkout@v2.3.4
@@ -39,21 +40,21 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           name: image_tags
-          workflow: az-vote-cicd.yml
+          workflow: ci.yml
           run_id: ${{ github.event.client_payload.runid }}
           path: ${{ github.workspace }}/image_tags
       - name: Download Manifests Templates
         uses: dawidd6/action-download-artifact@v2
         with:
           name: manifests
-          workflow: az-vote-cicd.yml
+          workflow: ci.yml
           run_id: ${{ github.event.client_payload.runid }}
           path: ${{ github.workspace }}/manifests
       - name: Download Utils
         uses: dawidd6/action-download-artifact@v2
         with:
           name: utils
-          workflow: az-vote-cicd.yml
+          workflow: ci.yml
           run_id: ${{ github.event.client_payload.runid }}
           path: ${{ github.workspace }}/utils
       - name: Read Image Tags
@@ -67,9 +68,7 @@ jobs:
           ${{ github.workspace }}/utils/generate-manifests.sh manifests gen_manifests
         env:
           TARGET_NAMESPACE: ${{ secrets.TARGET_NAMESPACE }}
-          VOTE_APP_TITLE: ${{ secrets.VOTE_APP_TITLE }}
-          DEMO_APP_URL: ${{ secrets.DEMO_APP_URL }}
-          AZURE_VOTE_IMAGE_REPO: ${{ secrets.AZURE_VOTE_IMAGE_REPO }}
+          OHIFVIEWER_IMAGE_REPO: ${{ secrets.OHIFVIEWER_IMAGE_REPO }}
           SYSTEM_LABEL: ${{ secrets.SYSTEM_LABEL }}
       - name: Create PR
         run: |
@@ -80,4 +79,4 @@ jobs:
           releasse_number=$(echo $GITHUB_REF | awk -F"release/" '{print $2}')
           [[ -z "$releasse_number" ]] || releasse_prefix=$(echo "release/"$releasse_number)  
           
-          ${{ github.workspace }}/utils/create-pr.sh -s ${{ github.workspace }}/gen_manifests -d ${{ secrets.MANIFESTS_FOLDER }} -r ${{ secrets.MANIFESTS_REPO }} -b $(echo $release_prefix)${{ secrets.MANIFESTS_BRANCH }} -i $GITHUB_RUN_ID -t ${{ secrets.PAT }} -e ${{ secrets.ENVIRONMENT_NAME }}        
+          ${{ github.workspace }}/utils/create-pr.sh -s ${{ github.workspace }}/gen_manifests -d ${{ secrets.MANIFESTS_FOLDER }} -r ${{ secrets.MANIFESTS_REPO_PROD }} -b $(echo $release_prefix)${{ secrets.MANIFESTS_BRANCH }} -i $GITHUB_RUN_ID -t ${{ secrets.PAT }} -e ${{ secrets.ENVIRONMENT_NAME }}        
