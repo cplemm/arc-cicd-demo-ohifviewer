@@ -55,17 +55,17 @@ jobs:
         docker build -t ${{ secrets.AZ_ACR_NAME }}/ohifviewer/ohifviewer:${{ github.sha }} ./ohifviewer/src
         docker push ${{ secrets.AZ_ACR_NAME }}/ohifviewer/ohifviewer:${{ github.sha }}
     - name: Upload Image Tag
-      uses: actions/upload-artifact@v2.2.2
+      uses: actions/upload-artifact@v3
       with:
         name: image_tags
         path: ${{ github.workspace }}/image_tags
     - name: Upload Manifests Templates
-      uses: actions/upload-artifact@v2.2.2
+      uses: actions/upload-artifact@v3
       with:
         name: manifests
         path: ${{ github.workspace }}/ohifviewer/manifests
     - name: Upload Utils
-      uses: actions/upload-artifact@v2.2.2
+      uses: actions/upload-artifact@v3
       with:
         name: utils
         path: ${{ github.workspace }}/utils
